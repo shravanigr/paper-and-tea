@@ -43,7 +43,7 @@ export class BookEffects {
       ofType(BookActions.loadNewBooks),
       mergeMap(() =>
         this.bookService.getNewBooks().pipe(
-          map((response) => BookActions.loadNewBooksSuccess({ books: response.docs })),
+          map((response) => BookActions.loadNewBooksSuccess({ books: response.works })),
           catchError((error) =>
             of(BookActions.loadNewBooksFailure({ error: error.message }))
           )

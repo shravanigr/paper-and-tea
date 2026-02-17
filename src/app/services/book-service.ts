@@ -37,7 +37,7 @@ export class BookService {
     return this.http.get<TrendingResponse>(`${this.trendingUrl}?limit=6`);
   }
 
-  getNewBooks(): Observable<SearchResponse> {
-    return this.http.get<SearchResponse>(`${this.apiUrl}?q=subject:fiction+language:eng&sort=new&limit=6&fields=key,title,author_name,cover_i,first_publish_year`);
+  getNewBooks(): Observable<TrendingResponse> {
+    return this.http.get<TrendingResponse>('https://openlibrary.org/trending/daily.json?limit=6');
   }
 }
