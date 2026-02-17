@@ -1,1 +1,44 @@
-<p>book-details works!</p>
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+  <div class="mb-8">
+    <a routerLink="/book-list" class="inline-flex items-center text-sm font-medium text-gray-400 hover:text-gray-900 transition-colors duration-200 cursor-pointer">
+      <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+      </svg>
+      Back to Book List
+    </a>
+  </div>
+
+  <div *ngIf="book$ | async as book; else notFound" class="bg-white rounded-lg shadow-lg overflow-hidden">
+    <div class="md:flex">
+      <!-- Book Cover -->
+      <div class="md:flex-shrink-0">
+        <div class="h-96 w-full md:w-64 bg-gray-200 flex items-center justify-center">
+             <img *ngIf="book.cover_i" 
+                 [src]="'https://covers.openlibrary.org/b/id/' + book.cover_i + '-L.jpg'" 
+                 [alt]="book.title" 
+                 class="h-full w-full object-cover">
+             <span *ngIf="!book.cover_i" class="text-gray-400 text-6xl">📚</span>
+        </div>
+      </div>
+      
+      <!-- Book Info -->
+      <div class="p-8">
+        <div class="uppercase tracking-wide text-sm text-indigo-500 font-semibold mb-2">
+            First Published: {{ book.first_publish_year || 'Unknown' }}
+        </div>
+        <h1 class="block mt-1 text-4xl leading-tight font-bold text-gray-900">{{ book.title }}</h1>
+        <p class="mt-4 text-gray-500 text-xl" *ngIf="book.author_name">
+          by {{ book.author_name.join(', ') }}
+        </p>
+        
+        <!-- Add more details as available in the Book interface -->
+      </div>
+    </div>
+  </div>
+
+  <ng-template #notFound>
+    <div class="text-center py-12">
+      <p class="text-gray-500 text-xl">Book not found or details unavailable.</p>
+    </div>
+  </ng-template>
+</div>

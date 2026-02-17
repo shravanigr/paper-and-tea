@@ -1,1 +1,39 @@
-<p>books-list works!</p>
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+  <div class="mb-8">
+    <a routerLink="/" class="inline-flex items-center text-sm font-medium text-gray-400 hover:text-gray-900 transition-colors duration-200">
+      <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+      </svg>
+      Back to Home
+    </a>
+  </div>
+  <!-- Loading State -->
+  <div *ngIf="loading$ | async" class="text-center py-12">
+    <div class="animate-pulse flex flex-col items-center">
+      <div class="h-4 bg-gray-200 rounded w-1/4 mb-4"></div>
+      <div class="h-4 bg-gray-200 rounded w-1/2"></div>
+    </div>
+  </div>
+
+  <!-- Error State -->
+  <div *ngIf="error$ | async as error" class="text-center py-12 text-red-500">
+    <p>Error: {{ error }}</p>
+  </div>
+
+  <!-- Books Grid -->
+  <div *ngIf="books$ | async as books" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+    <div *ngFor="let book of books" 
+         [routerLink]="['/book-details', book.key]"
+         class="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300 cursor-pointer">
+      <div class="p-6">
+        <h3 class="text-xl font-bold text-gray-900 mb-2">{{ book.title }}</h3>
+        <p class="text-sm text-gray-600 mb-4" *ngIf="book.author_name">
+          by {{ book.author_name.join(', ') }}
+        </p>
+        <div class="flex items-center justify-between text-sm text-gray-500">
+          <span *ngIf="book.first_publish_year">Published: {{ book.first_publish_year }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
