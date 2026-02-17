@@ -1,80 +1,68 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
+import * as BookActions from '../../store/book.actions';
+import * as BookSelectors from '../../store/book.selectors';
+import { Book } from '../../services/book-service';
 
-type BookCategory = 'Popular' | 'New';
-
-interface Book {
+interface BookViewModel {
+  key: string;
   title: string;
   author: string;
-  category: BookCategory;
+  category: 'Popular' | 'New';
   tagline: string;
   badge?: string;
 }
 
+import { RouterModule } from '@angular/router';
+
 @Component({
   selector: 'app-popular-new-books-list',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, RouterModule],
   templateUrl: './popular-new-books-list.html',
   styleUrl: './popular-new-books-list.css',
 })
-export class PopularNewBooksList {
-  popularBooks: Book[] = [
-    {
-      title: 'The Silent Garden',
-      author: 'Amara Lee',
-      category: 'Popular',
-      tagline: 'A lyrical story about finding quiet in a noisy world.',
-      badge: 'Editor’s pick',
-    },
-    {
-      title: 'City of Paper Moons',
-      author: 'Rohan Das',
-      category: 'Popular',
-      tagline: 'Two strangers, one unforgettable summer in a bookshop by the sea.',
-      badge: 'Trending',
-    },
-    {
-      title: 'Tea Leaves & Time Travel',
-      author: 'Mina Sol',
-      category: 'Popular',
-      tagline: 'A cozy fantasy where every cup of tea opens a different door.',
-    },
-    {
-      title: 'Letters We Never Sent',
-      author: 'Isla Quinn',
-      category: 'Popular',
-      tagline: 'A tender exploration of love, grief, and second chances.',
-    },
-  ];
+export class PopularNewBooksList implements OnInit {
+  private store = inject(Store);
 
-  newBooks: Book[] = [
-    {
-      title: 'Maps for Lost Things',
-      author: 'Kaito Ren',
-      category: 'New',
-      tagline: 'A cartographer who can map memories is asked to erase his own.',
-      badge: 'Just in',
-    },
-    {
-      title: 'The House Between Chapters',
-      author: 'Lina Park',
-      category: 'New',
-      tagline: 'A magical realist tale set in a library that only appears at dusk.',
-    },
-    {
-      title: 'After the Last Page',
-      author: 'Julien Hart',
-      category: 'New',
-      tagline: 'What happens to characters when their stories end?',
-    },
-    {
-      title: 'How To Hold a Star',
-      author: 'Nora Vale',
-      category: 'New',
-      tagline: 'A tender coming‑of‑age about friendship, music, and light.',
-    },
-  ];
+  popularBooks$: Observable<BookViewModel[]>;
+  newBooks$: Observable<BookViewModel[]>;
+
+  constructor() {
+    this.popularBooks$ = this.store.select(BookSelectors.selectPopularBooks).pipe(
+      map(books => books.map(book => ({
+        key: book.key,
+        title: book.title,
+        author: book.author_name?.[0] || 'Unknown Author',
+        category: 'Popular' as const,
+        tagline: `First published in ${book.first_publish_year || 'N/A'}`,
+        badge: this.getRandomBadge()
+      })))
+    );
+
+    this.newBooks$ = this.store.select(BookSelectors.selectNewBooks).pipe(
+      map(books => books.map(book => ({
+        key: book.key,
+        title: book.title,
+        author: book.author_name?.[0] || 'Unknown Author',
+        category: 'New' as const,
+        tagline: `First published in ${book.first_publish_year || 'N/A'}`,
+        badge: 'Just in'
+      })))
+    );
+  }
+
+  ngOnInit() {
+    this.store.dispatch(BookActions.loadPopularBooks());
+    this.store.dispatch(BookActions.loadNewBooks());
+  }
+
+  getRandomBadge(): string | undefined {
+    return Math.random() > 0.5 ? 'Trending' : undefined;
+  }
 
   scrollCarousel(container: HTMLElement, direction: 'left' | 'right') {
     const amount = 320;

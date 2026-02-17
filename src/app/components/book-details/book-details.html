@@ -1,10 +1,10 @@
 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
   <div class="mb-8">
-    <a routerLink="/book-list" class="inline-flex items-center text-sm font-medium text-gray-400 hover:text-gray-900 transition-colors duration-200 cursor-pointer">
+    <a [routerLink]="backLinkUrl" class="inline-flex items-center text-sm font-medium text-gray-400 hover:text-gray-900 transition-colors duration-200 cursor-pointer">
       <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
       </svg>
-      Back to Book List
+      {{ backLinkText }}
     </a>
   </div>
 

@@ -18,7 +18,22 @@ export const selectError = createSelector(
   (state: BookState) => state.error
 );
 
+export const selectPopularBooks = createSelector(
+  selectBookState,
+  (state: BookState) => state.popularBooks
+);
+
+export const selectNewBooks = createSelector(
+  selectBookState,
+  (state: BookState) => state.newBooks
+);
+
 export const selectBookByKey = (key: string) => createSelector(
   selectBooks,
-  (books) => books.find(book => book.key === key)
+  selectPopularBooks,
+  selectNewBooks,
+  (books, popularBooks, newBooks) => {
+    const allBooks = [...books, ...popularBooks, ...newBooks];
+    return allBooks.find(book => book.key === key);
+  }
 );

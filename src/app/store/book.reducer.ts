@@ -4,12 +4,16 @@ import { Book } from '../services/book-service';
 
 export interface BookState {
   books: Book[];
+  popularBooks: Book[];
+  newBooks: Book[];
   loading: boolean;
   error: string | null;
 }
 
 export const initialState: BookState = {
   books: [],
+  popularBooks: [],
+  newBooks: [],
   loading: false,
   error: null,
 };
@@ -31,5 +35,13 @@ export const bookReducer = createReducer(
     ...state,
     loading: false,
     error,
+  })),
+  on(BookActions.loadPopularBooksSuccess, (state, { books }) => ({
+    ...state,
+    popularBooks: books,
+  })),
+  on(BookActions.loadNewBooksSuccess, (state, { books }) => ({
+    ...state,
+    newBooks: books,
   }))
 );

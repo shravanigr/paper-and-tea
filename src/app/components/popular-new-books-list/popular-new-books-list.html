@@ -29,8 +29,10 @@
           class="flex space-x-6 overflow-x-auto pb-4 no-scrollbar snap-x snap-mandatory"
         >
           <article
-            *ngFor="let book of popularBooks"
-            class="min-w-[240px] max-w-xs snap-start rounded-2xl bg-gradient-to-br from-rose-50 to-teal-50 shadow-md hover:shadow-xl transition-shadow duration-200 border border-rose-100/70"
+            *ngFor="let book of popularBooks$ | async"
+            [routerLink]="['/book-details', book.key]"
+            [queryParams]="{ source: 'home' }"
+            class="min-w-[240px] max-w-xs snap-start rounded-2xl bg-gradient-to-br from-rose-50 to-teal-50 shadow-md hover:shadow-xl transition-shadow duration-200 border border-rose-100/70 cursor-pointer"
           >
             <div class="p-5 flex flex-col h-full">
               <div class="mb-3 flex items-center justify-between">
@@ -47,10 +49,10 @@
                 </span>
               </div>
 
-              <h3 class="text-lg font-semibold text-gray-900 leading-snug">
+              <h3 class="text-lg font-semibold text-gray-900 leading-snug line-clamp-2">
                 {{ book.title }}
               </h3>
-              <p class="mt-1 text-sm text-gray-500">
+              <p class="mt-1 text-sm text-gray-500 line-clamp-1">
                 by {{ book.author }}
               </p>
 
@@ -59,7 +61,7 @@
               </p>
 
               <div class="mt-6 flex items-center justify-between text-xs text-gray-400">
-                <span>Fiction</span>
+                <span>{{ book.tagline.includes('published') ? 'Non-Fiction' : 'Fiction' }}</span> <!-- Fallback categorization -->
                 <button
                   type="button"
                   class="inline-flex items-center text-rose-500 hover:text-rose-600 font-medium"
@@ -129,8 +131,10 @@
           class="flex space-x-6 overflow-x-auto pb-4 no-scrollbar snap-x snap-mandatory"
         >
           <article
-            *ngFor="let book of newBooks"
-            class="min-w-[240px] max-w-xs snap-start rounded-2xl bg-gradient-to-br from-teal-50 to-rose-50 shadow-md hover:shadow-xl transition-shadow duration-200 border border-teal-100/70"
+            *ngFor="let book of newBooks$ | async"
+            [routerLink]="['/book-details', book.key]"
+            [queryParams]="{ source: 'home' }"
+            class="min-w-[240px] max-w-xs snap-start rounded-2xl bg-gradient-to-br from-teal-50 to-rose-50 shadow-md hover:shadow-xl transition-shadow duration-200 border border-teal-100/70 cursor-pointer"
           >
             <div class="p-5 flex flex-col h-full">
               <div class="mb-3 flex items-center justify-between">
@@ -147,10 +151,10 @@
                 </span>
               </div>
 
-              <h3 class="text-lg font-semibold text-gray-900 leading-snug">
+              <h3 class="text-lg font-semibold text-gray-900 leading-snug line-clamp-2">
                 {{ book.title }}
               </h3>
-              <p class="mt-1 text-sm text-gray-500">
+              <p class="mt-1 text-sm text-gray-500 line-clamp-1">
                 by {{ book.author }}
               </p>
 
@@ -159,7 +163,7 @@
               </p>
 
               <div class="mt-6 flex items-center justify-between text-xs text-gray-400">
-                <span>Fiction</span>
+                <span>{{ book.tagline.includes('published') ? 'Fiction' : 'New Release' }}</span>
                 <button
                   type="button"
                   class="inline-flex items-center text-rose-500 hover:text-rose-600 font-medium"

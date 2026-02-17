@@ -23,4 +23,32 @@ export class BookEffects {
       )
     )
   );
+
+  loadPopularBooks$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(BookActions.loadPopularBooks),
+      mergeMap(() =>
+        this.bookService.getPopularBooks().pipe(
+          map((response) => BookActions.loadPopularBooksSuccess({ books: response.works })),
+          catchError((error) =>
+            of(BookActions.loadPopularBooksFailure({ error: error.message }))
+          )
+        )
+      )
+    )
+  );
+
+  loadNewBooks$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(BookActions.loadNewBooks),
+      mergeMap(() =>
+        this.bookService.getNewBooks().pipe(
+          map((response) => BookActions.loadNewBooksSuccess({ books: response.docs })),
+          catchError((error) =>
+            of(BookActions.loadNewBooksFailure({ error: error.message }))
+          )
+        )
+      )
+    )
+  );
 }

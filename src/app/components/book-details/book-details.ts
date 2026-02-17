@@ -22,7 +22,20 @@ export class BookDetailsComponent implements OnInit {
     private store: Store
   ) {}
 
+  backLinkText = 'Back to Book List';
+  backLinkUrl = '/book-list';
+
   ngOnInit() {
+    this.route.queryParams.subscribe(params => {
+      if (params['source'] === 'home') {
+        this.backLinkText = 'Back to Home';
+        this.backLinkUrl = '/';
+      } else {
+        this.backLinkText = 'Back to Book List';
+        this.backLinkUrl = '/book-list';
+      }
+    });
+
     this.book$ = this.route.paramMap.pipe(
       map(params => params.get('id')),
       switchMap(id => {
