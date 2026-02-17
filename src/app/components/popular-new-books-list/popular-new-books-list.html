@@ -1,0 +1,203 @@
+<section class="bg-white border-t border-rose-100">
+  <div class="max-w-7xl mx-auto py-10 px-4 sm:px-6 lg:px-8">
+    <!-- Popular Books -->
+    <div class="space-y-4 mb-10">
+      <div class="flex items-baseline justify-between">
+        <div>
+          <p class="text-xs uppercase tracking-[0.25em] text-rose-400 font-semibold mb-1">
+            For you
+          </p>
+          <h2 class="text-2xl sm:text-3xl font-serif font-bold text-gray-800">
+            Popular this week
+          </h2>
+        </div>
+        <button
+          type="button"
+          class="inline-flex items-center text-sm font-medium text-rose-500 hover:text-rose-600 transition-colors"
+          (click)="scrollCarousel(popularCarousel, 'right')"
+        >
+          See all
+          <span class="ml-1 inline-flex h-6 w-6 items-center justify-center rounded-full bg-rose-100 text-rose-500">
+            →
+          </span>
+        </button>
+      </div>
+
+      <div class="relative group mt-4">
+        <div
+          #popularCarousel
+          class="flex space-x-6 overflow-x-auto pb-4 no-scrollbar snap-x snap-mandatory"
+        >
+          <article
+            *ngFor="let book of popularBooks"
+            class="min-w-[240px] max-w-xs snap-start rounded-2xl bg-gradient-to-br from-rose-50 to-teal-50 shadow-md hover:shadow-xl transition-shadow duration-200 border border-rose-100/70"
+          >
+            <div class="p-5 flex flex-col h-full">
+              <div class="mb-3 flex items-center justify-between">
+                <span
+                  class="inline-flex items-center rounded-full bg-white/80 px-3 py-1 text-xs font-semibold text-rose-500 shadow-sm"
+                >
+                  {{ book.category }}
+                </span>
+                <span
+                  *ngIf="book.badge"
+                  class="inline-flex items-center rounded-full bg-rose-500/10 px-3 py-1 text-xs font-semibold text-rose-500"
+                >
+                  {{ book.badge }}
+                </span>
+              </div>
+
+              <h3 class="text-lg font-semibold text-gray-900 leading-snug">
+                {{ book.title }}
+              </h3>
+              <p class="mt-1 text-sm text-gray-500">
+                by {{ book.author }}
+              </p>
+
+              <p class="mt-4 text-sm text-gray-600 line-clamp-3">
+                {{ book.tagline }}
+              </p>
+
+              <div class="mt-6 flex items-center justify-between text-xs text-gray-400">
+                <span>Fiction</span>
+                <button
+                  type="button"
+                  class="inline-flex items-center text-rose-500 hover:text-rose-600 font-medium"
+                >
+                  Details
+                  <svg
+                    class="ml-1 h-4 w-4"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M9 5l7 7-7 7"
+                    />
+                  </svg>
+                </button>
+              </div>
+            </div>
+          </article>
+        </div>
+
+        <!-- Right arrow for desktop -->
+        <button
+          type="button"
+          class="hidden md:flex absolute inset-y-0 right-0 w-10 items-center justify-center bg-gradient-to-l from-white to-transparent text-rose-500 hover:text-rose-600"
+          (click)="scrollCarousel(popularCarousel, 'right')"
+          aria-label="Scroll popular books"
+        >
+          <span
+            class="inline-flex h-8 w-8 items-center justify-center rounded-full bg-rose-100 shadow-sm"
+          >
+            →
+          </span>
+        </button>
+      </div>
+    </div>
+
+    <!-- New Books -->
+    <div class="space-y-4">
+      <div class="flex items-baseline justify-between">
+        <div>
+          <p class="text-xs uppercase tracking-[0.25em] text-teal-400 font-semibold mb-1">
+            Fresh off the press
+          </p>
+          <h2 class="text-2xl sm:text-3xl font-serif font-bold text-gray-800">
+            New arrivals
+          </h2>
+        </div>
+        <button
+          type="button"
+          class="inline-flex items-center text-sm font-medium text-rose-500 hover:text-rose-600 transition-colors"
+          (click)="scrollCarousel(newCarousel, 'right')"
+        >
+          See all
+          <span class="ml-1 inline-flex h-6 w-6 items-center justify-center rounded-full bg-rose-100 text-rose-500">
+            →
+          </span>
+        </button>
+      </div>
+
+      <div class="relative group mt-4">
+        <div
+          #newCarousel
+          class="flex space-x-6 overflow-x-auto pb-4 no-scrollbar snap-x snap-mandatory"
+        >
+          <article
+            *ngFor="let book of newBooks"
+            class="min-w-[240px] max-w-xs snap-start rounded-2xl bg-gradient-to-br from-teal-50 to-rose-50 shadow-md hover:shadow-xl transition-shadow duration-200 border border-teal-100/70"
+          >
+            <div class="p-5 flex flex-col h-full">
+              <div class="mb-3 flex items-center justify-between">
+                <span
+                  class="inline-flex items-center rounded-full bg-white/80 px-3 py-1 text-xs font-semibold text-teal-500 shadow-sm"
+                >
+                  {{ book.category }}
+                </span>
+                <span
+                  *ngIf="book.badge"
+                  class="inline-flex items-center rounded-full bg-teal-500/10 px-3 py-1 text-xs font-semibold text-teal-500"
+                >
+                  {{ book.badge }}
+                </span>
+              </div>
+
+              <h3 class="text-lg font-semibold text-gray-900 leading-snug">
+                {{ book.title }}
+              </h3>
+              <p class="mt-1 text-sm text-gray-500">
+                by {{ book.author }}
+              </p>
+
+              <p class="mt-4 text-sm text-gray-600 line-clamp-3">
+                {{ book.tagline }}
+              </p>
+
+              <div class="mt-6 flex items-center justify-between text-xs text-gray-400">
+                <span>Fiction</span>
+                <button
+                  type="button"
+                  class="inline-flex items-center text-rose-500 hover:text-rose-600 font-medium"
+                >
+                  Details
+                  <svg
+                    class="ml-1 h-4 w-4"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M9 5l7 7-7 7"
+                    />
+                  </svg>
+                </button>
+              </div>
+            </div>
+          </article>
+        </div>
+
+        <!-- Right arrow for desktop -->
+        <button
+          type="button"
+          class="hidden md:flex absolute inset-y-0 right-0 w-10 items-center justify-center bg-gradient-to-l from-white to-transparent text-rose-500 hover:text-rose-600"
+          (click)="scrollCarousel(newCarousel, 'right')"
+          aria-label="Scroll new books"
+        >
+          <span
+            class="inline-flex h-8 w-8 items-center justify-center rounded-full bg-rose-100 shadow-sm"
+          >
+            →
+          </span>
+        </button>
+      </div>
+    </div>
+  </div>
+</section>

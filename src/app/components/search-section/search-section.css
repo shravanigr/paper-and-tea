@@ -1,0 +1,49 @@
+.typewriter-text {
+    overflow: hidden;
+    white-space: nowrap;
+    margin-left: auto;
+    margin-right: auto;
+    letter-spacing: 0.05em;
+    border-right: .15em solid #fb7185;
+}
+
+.typewriter-h1 {
+    animation: 
+      typing 3.5s steps(29, end) forwards,
+      blink-caret .75s step-end 5 forwards; 
+    max-width: fit-content;
+}
+
+.typewriter-p {
+    opacity: 0; 
+    animation:
+        typing 3.5s steps(48, end) 3.5s forwards, 
+        blink-caret .75s step-end infinite 3.5s, 
+        appear 0.1s linear 3.5s forwards; 
+    max-width: fit-content;
+}
+
+@keyframes typing {
+    from { width: 0 }
+    to { width: 100% }
+}
+  
+@keyframes blink-caret {
+    from, to { border-color: transparent }
+    50% { border-color: #fb7185; }
+}
+  
+@keyframes appear {
+    to { opacity: 1; }
+}
+
+/* Disable on small screens to prevent layout issues */
+@media (max-width: 640px) {
+    .typewriter-text, .typewriter-h1, .typewriter-p {
+        white-space: normal;
+        animation: none;
+        border-right: none;
+        opacity: 1;
+        width: auto;
+    }
+}
